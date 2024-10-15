@@ -92,3 +92,62 @@ festivalData <- read.delim("data/DownloadFestival.dat", header = TRUE)
 festivalHistogram <- ggplot(festivalData, aes(day1)) + theme(legend.position = "none")
 # Add the graphical layer:
 festivalHistogram + geom_histogram(binwidth = 0.4 ) + labs(x = "Hygiene (Day 1 of Festival)", y = "Frequency")
+
+# Boxplot
+festivalBoxplot <- ggplot(festivalData, aes(gender, day1))
+festivalBoxplot + geom_boxplot() + labs(x = "Gender", y = "Hygiene (Day 1 of Festival)")
+
+# Remove outliers
+festivalData_filtered <- subset(festivalData, day1 < 4)
+festivalBoxplot <- ggplot(festivalData_filtered, aes(gender, day1))
+festivalBoxplot + geom_boxplot() + labs(x = "Gender", y = "Hygiene (Day 1 of Festival)")
+
+#density plots
+density <- ggplot(festivalData, aes(day1))
+festivalData <- read.delim("data/DownloadFestival(No Outlier).dat", header = TRUE)
+density + geom_density() +
+  labs(x = "Hygiene (Day 1 of Festival)", y = "Density Estimate")
+
+#add data
+chickFlick <- read.delim("data/ChickFlick.dat", header = TRUE)
+#check the data
+chickFlick
+#To plot the mean arousal score (y-axis) for each film(x-axis) first create the plot object:
+bar <- ggplot(chickFlick, aes(film, arousal))
+#To add the mean, displayed as bars, we can add this as a layer to bar using the stat_summary() function:
+bar + stat_summary(fun = mean, geom = "bar", fill = "White", colour =
+                       "Black") +
+#To add error bars, add these as a layer using stat_summary():
+                        stat_summary(fun.data = mean_cl_normal, geom = "pointrange") +
+#Finally, let’s add some labels to the graph using lab():
+                        labs(x = "Film", y = "Mean Arousal")
+
+# geom = "errorbar“
+bar + stat_summary(fun = mean, geom = "bar",
+                   position="dodge") +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar",
+               position = position_dodge(width = 0.90), width = 0.2) +
+  labs(x = "Film", y = "Mean Arousal", fill = "Gender")
+
+# when separating male and female in FIGURE 4.25
+bar +
+  stat_summary(fun = mean, geom = "bar") +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar",
+               width = 0.2) +
+  facet_wrap(~ gender) +
+  labs(x = "Film", y = "Mean Arousal") +
+  theme(legend.position = "none")
+
+# Load data
+hiccupsData <- read.delim("data/Hiccups.dat", header = TRUE)
+# Check the data
+head(hiccupsData)
+str(hiccupsData)
+# Reshape the data from wide to long format
+hiccups <- stack(hiccupsData)
+head(hiccups)
+# Create a factor for 'Intervention', specifying unique levels
+hiccups$Intervention_Factor <- factor(hiccups$Intervention,
+                                      levels = unique(hiccups$Intervention))
+# Check the structure of the data to verify the factor
+str(hiccups)
