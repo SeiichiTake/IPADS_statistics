@@ -1,5 +1,7 @@
 install.packages("reshape")
 install.packages("palmerpenguins")
+install.packages("AER")
+library("AER")
 library(palmerpenguins)
 library(reshape)
 library(tidyverse)
@@ -151,3 +153,9 @@ hiccups$Intervention_Factor <- factor(hiccups$Intervention,
                                       levels = unique(hiccups$Intervention))
 # Check the structure of the data to verify the factor
 str(hiccups)
+
+# data for assignment
+data("STAR")
+
+# conver to csv
+write.csv(STAR, "data/STAR.csv")
