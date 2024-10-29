@@ -139,23 +139,3 @@ bar +
   facet_wrap(~ gender) +
   labs(x = "Film", y = "Mean Arousal") +
   theme(legend.position = "none")
-
-# Load data
-hiccupsData <- read.delim("data/Hiccups.dat", header = TRUE)
-# Check the data
-head(hiccupsData)
-str(hiccupsData)
-# Reshape the data from wide to long format
-hiccups <- stack(hiccupsData)
-head(hiccups)
-# Create a factor for 'Intervention', specifying unique levels
-hiccups$Intervention_Factor <- factor(hiccups$Intervention,
-                                      levels = unique(hiccups$Intervention))
-# Check the structure of the data to verify the factor
-str(hiccups)
-
-# data for assignment
-data("STAR")
-
-# conver to csv
-write.csv(STAR, "data/STAR.csv")
